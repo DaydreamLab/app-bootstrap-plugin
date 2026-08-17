@@ -1,0 +1,16 @@
+{
+  "name": "daydreamlab-app-bootstrap",
+  "owner": {
+    "name": "DaydreamLab"
+  },
+  "metadata": {
+    "description": "App 控制台 MCP 工具：Cursor skills + 遠端 MCP。MCP_URL 預設為已佈署的控制台。"
+  },
+  "plugins": [
+    {
+      "name": "app-bootstrap",
+      "source": ".",
+      "description": "App 控制台 MCP 工具（bootstrap、env、logs、destroy）"
+    }
+  ]
+}

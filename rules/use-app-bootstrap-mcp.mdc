@@ -1,0 +1,14 @@
+---
+description: Use App 控制台 MCP 工具 for cloud bootstrap, env, logs, and destroy
+alwaysApply: true
+---
+
+For provisioning, cloud env, logs, cost, or destroy of the **current GitHub application repo**, use the **app-bootstrap** MCP server (App 控制台 MCP 工具; not raw AWS console or long-lived keys in chat).
+
+If this git repo is `app-bootstrap` (the tool itself), do **not** call MCP. Use `scripts/platform-stack.sh`, `scripts/platform-env.sh`, `scripts/shared-dev-stack.sh`, `scripts/shared-prod-stack.sh`, and `.github/workflows/deploy-prod.yml`.
+
+- `repo` is always `owner/name` from `git remote` (origin).
+- Default env is `dev`. Prod app stacks: MCP `bootstrap(env=prod)` after shared-prod is applied.
+- Never print GitHub or AWS secrets. `list_env` returns keys only.
+- Destructive tools (`set_env` roll, `unset_env`, `destroy`) follow the tool's confirm_token flow.
+- If MCP is disconnected, the URL is plugin variable `MCP_URL` (set after App 控制台 MCP 工具 is deployed).

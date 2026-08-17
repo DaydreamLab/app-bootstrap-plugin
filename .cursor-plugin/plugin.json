@@ -1,0 +1,26 @@
+{
+  "name": "app-bootstrap",
+  "version": "0.1.0",
+  "description": "GitHub App MCP for bootstrapping Fargate app stacks, plus chat skills for each tool. Set MCP_URL after the server is reachable.",
+  "author": {
+    "name": "DaydreamLab"
+  },
+  "homepage": "https://github.com/DaydreamLab/app-bootstrap-plugin",
+  "repository": "https://github.com/DaydreamLab/app-bootstrap-plugin",
+  "keywords": ["mcp", "aws", "github", "bootstrap", "ecs"],
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "mcpServers": "./mcp.json",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "MCP_URL": {
+        "type": "string",
+        "title": "MCP URL",
+        "description": "Streamable HTTP MCP endpoint. Deployed: https://app-bootstrap.daydream-lab.com/mcp. Local Compose: http://127.0.0.1:8080/mcp",
+        "default": "https://app-bootstrap.daydream-lab.com/mcp"
+      }
+    },
+    "required": ["MCP_URL"]
+  }
+}

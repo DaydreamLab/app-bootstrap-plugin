@@ -1,0 +1,8 @@
+{
+  "name": "app-bootstrap",
+  "version": "0.1.0",
+  "description": "App 控制台 MCP 工具：為應用 repo 開 Fargate／EC2 堆疊，並附各 tool 的 chat skills。MCP_URL 在控制台可連後設定。",
+  "author": {
+    "name": "DaydreamLab"
+  }
+}
