@@ -2,7 +2,7 @@
 
 公開安裝用 repo。連到已佈署的 App 控制台 MCP（`https://app-bootstrap.daydream-lab.com/mcp`），附 skills 與 rules。
 
-平台本體（private）在 [`DaydreamLab/app-bootstrap`](https://github.com/DaydreamLab/app-bootstrap)。不要對那個 repo 呼叫 MCP。
+平台本體（private）[`DaydreamLab/app-bootstrap`](https://github.com/DaydreamLab/app-bootstrap) 以 **git submodule** 掛在 `cursor-plugin/`。本 repo 是 plugin 原始檔。
 
 ## 安裝
 
@@ -30,6 +30,16 @@
 - 推 `main` → dev；tag `vMAJOR.MINOR.PATCH` → prod
 - shared-dev 平日 09:00 開、每天 22:00 關（Asia/Taipei）；502 時先 `wake`
 
-## 開發
+## 開發（與平台 repo 同步）
 
-plugin 原始檔在平台 repo 的 `cursor-plugin/`。改完再同步到本 repo。
+在平台 repo 裡改 `cursor-plugin/`（本 repo 的 checkout），提交並推到 **本 repo `main`**，再回平台 repo 更新 submodule 指標：
+
+```bash
+cd cursor-plugin
+git checkout main
+# 改檔後
+git add -A && git commit -m "Explain the change." && git push origin main
+cd ..
+git add cursor-plugin
+git commit -m "Point cursor-plugin submodule at the latest plugin."
+```
