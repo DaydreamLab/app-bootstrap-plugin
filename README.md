@@ -27,7 +27,7 @@ MCP 已寫死 `https://app-bootstrap.daydream-lab.com/mcp`，不用再填 URL。
 
 常用：`project_status`、`bootstrap`、`wake`、`set_env` / `list_env`、`attach_domain`、`logs_*`、`destroy`。
 
-- 共用 ALB：`bootstrap` 必填 `hostname`，跨 dev／prod 不可撞名
+- 共用 ALB：`bootstrap` 的 `hostname` 可省略，之後 `attach_domain`；有填則跨 dev／prod 不可撞名
 - 推 `main` → dev；tag `vMAJOR.MINOR.PATCH` → prod
 - shared-dev 平日 09:00 開、每天 22:00 關（Asia/Taipei）；502 時先 `wake`
 

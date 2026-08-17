@@ -12,7 +12,7 @@ Otherwise call MCP tool `bootstrap` on server `app-bootstrap`. Repo must contain
 
 Ask **`env`**: `dev` (default) or `prod`.
 
-**Default** (`static_ip=false`): join the shared Fargate+ALB pool for that env. **Require `hostname`** (unique across **both** shared ALBs). Missing pool → tell operator to apply the matching shared-*-stack.sh.
+**Default** (`static_ip=false`): join the shared Fargate+ALB pool for that env. **`hostname` is optional** (unique across **both** shared ALBs when set). Omit it and call `attach_domain` later. Missing pool → tell operator to apply the matching shared-*-stack.sh.
 
 - `database=true`: on **shared-dev** → shared Postgres EC2; on **prod** (or any `static_ip`) → dedicated RDS. Optional `db_instance_class` (default `db.t4g.micro`).
 - `keep_warm=true`: only for shared-**dev**.

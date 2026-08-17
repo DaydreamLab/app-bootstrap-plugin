@@ -9,12 +9,12 @@ Server name: `app-bootstrap`。`repo` 從 `git remote` → `owner/name`。預設
 | Tool | When | Args |
 |---|---|---|
 | `project_status` | Status, URLs, ECS, latest deploy | `repo`, `env?`, `region?` |
-| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared Fargate+ALB（**`hostname` required**, unique across envs）。`static_ip=true` = EC2+EIP。`database`：shared-dev 共用 Postgres；**prod 為 RDS**。`db_instance_class?`。`keep_warm` 僅 shared-dev | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `static_ip?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
+| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared Fargate+ALB（`hostname` optional, unique across envs when set; otherwise `attach_domain` later）。`static_ip=true` = EC2+EIP。`database`：shared-dev 共用 Postgres；**prod 為 RDS**。`db_instance_class?`。`keep_warm` 僅 shared-dev | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `static_ip?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
 | `wake` | Start shared-**dev** service + Postgres until next 22:00 Taipei | `repo`, `region?`, `keep_warm?` |
 | `set_env` | One Secrets Manager key; confirm to roll ECS | `repo`, `key`, `value`, `env?`, `region?`, `confirm_token?` |
 | `list_env` | List keys only (no values) | `repo`, `env?`, `region?` |
 | `unset_env` | Remove key; confirm to roll | `repo`, `key`, `env?`, `region?`, `confirm_token?` |
-| `attach_domain` | After DNS matches | `repo`, `hostname`, `region?` |
+| `attach_domain` | Set hostname (ALB host-header) after DNS matches | `repo`, `hostname`, `region?`, `env?` |
 | `logs_status` / `logs_deploys` / `logs_errors` | Health / Actions / CW | … |
 | `cost_estimate` | Budget alerts | `repo`, `region?` |
 | `destroy` | Tear down this app **env** (not shared pools) | `repo`, `env?`, … (prod: `DESTROY owner/name`) |
