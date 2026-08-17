@@ -2,7 +2,7 @@
   "mcpServers": {
     "app-bootstrap": {
       "type": "http",
-      "url": "${MCP_URL}"
+      "url": "https://app-bootstrap.daydream-lab.com/mcp"
     }
   }
 }

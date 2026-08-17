@@ -10,9 +10,10 @@
 2. **Add Marketplace** → **Import from Github**
 3. 貼：`https://github.com/DaydreamLab/app-bootstrap-plugin`
 4. 安裝 plugin **app-bootstrap**
-5. `MCP_URL` 用預設 `https://app-bootstrap.daydream-lab.com/mcp`（本機 Compose 可改 `http://127.0.0.1:8080/mcp`）
 
-第一次連線走 GitHub OAuth。不要在 `mcp.json` 再加同一條 URL，也不要把 token 寫進 plugin。
+MCP 已寫死 `https://app-bootstrap.daydream-lab.com/mcp`，不用再填 URL。第一次連線走 GitHub OAuth。不要在 Cursor 使用者 `mcp.json` 再加同一條，也不要把 token 寫進 plugin。
+
+本機 Compose 除錯才用 `http://127.0.0.1:8080/mcp`（另加使用者 MCP，不要改這個公開 plugin）。
 
 ## 使用
 

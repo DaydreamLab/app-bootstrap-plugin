@@ -11,4 +11,4 @@ If this git repo is `app-bootstrap` (the tool itself), do **not** call MCP. Use 
 - Default env is `dev`. Prod app stacks: MCP `bootstrap(env=prod)` after shared-prod is applied.
 - Never print GitHub or AWS secrets. `list_env` returns keys only.
 - Destructive tools (`set_env` roll, `unset_env`, `destroy`) follow the tool's confirm_token flow.
-- If MCP is disconnected, the URL is plugin variable `MCP_URL` (set after App 控制台 MCP 工具 is deployed).
+- If MCP is disconnected, the endpoint is `https://app-bootstrap.daydream-lab.com/mcp` (baked into the plugin).

@@ -17,4 +17,4 @@ For application repos, see [README.md](../../README.md) and [reference.md](refer
 
 Before `bootstrap`, ask **env** (`dev`|`prod`) and **hostname** when using shared ALB. Unclear compute → shared Fargate (`static_ip=false`). `static_ip=true` only for fixed IP. `keep_warm` only shared-dev overnight.
 
-If MCP is missing, tell the user to set plugin variable `MCP_URL` (default `https://app-bootstrap.daydream-lab.com/mcp`).
+If MCP is missing, tell the user to install the **app-bootstrap** plugin from `https://github.com/DaydreamLab/app-bootstrap-plugin` (MCP URL is built in: `https://app-bootstrap.daydream-lab.com/mcp`).
