@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.head.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t app-ci .
+
+      - name: Health contract
+        run: |
+          set -euo pipefail
+          docker run -d --name app-ci -e PORT=8080 -p 8080:8080 app-ci
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8080/health >/dev/null; then
+              echo "health ok"
+              docker rm -f app-ci
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs app-ci || true
+          docker rm -f app-ci || true
+          echo "GET /health failed" >&2
+          exit 1

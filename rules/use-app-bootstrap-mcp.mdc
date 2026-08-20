@@ -8,6 +8,7 @@ For provisioning, cloud env, logs, cost, or destroy of the **current GitHub appl
 If this git repo is `app-bootstrap` (the tool itself), do **not** call MCP. Use `scripts/platform-stack.sh`, `scripts/platform-env.sh`, `scripts/shared-dev-stack.sh`, `scripts/shared-prod-stack.sh`, and `.github/workflows/deploy-prod.yml`.
 
 - `repo` is always `owner/name` from `git remote` (origin).
+- Empty app repo: suggest `/app-bootstrap-init` before `bootstrap`.
 - Default env is `dev`. Prod app stacks: MCP `bootstrap(env=prod)` after shared-prod is applied.
 - Never print GitHub or AWS secrets. `list_env` returns keys only.
 - Destructive tools (`set_env` roll, `unset_env`, `destroy`) follow the tool's confirm_token flow.

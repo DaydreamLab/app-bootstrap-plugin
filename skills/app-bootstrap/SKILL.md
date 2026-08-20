@@ -15,6 +15,8 @@ For application repos, see [README.md](../../README.md) and [reference.md](refer
 2. Prefer `project_status` before mutate.
 3. Tool names, args, and confirms: [reference.md](reference.md)
 
+Empty app repo (no Dockerfile／docs／workflows): suggest `/app-bootstrap-init` first, then `bootstrap`.
+
 Before `bootstrap`, ask **env** (`dev`|`prod`). **hostname is optional** on shared ALB (omit and call `attach_domain` later; unique across both ALBs when set). Unclear compute → shared Fargate (`static_ip=false`). `static_ip=true` only for fixed IP. `keep_warm` only shared-dev overnight.
 
 If MCP is missing, tell the user to install the **app-bootstrap** plugin from `https://github.com/DaydreamLab/app-bootstrap-plugin` (MCP URL is built in: `https://app-bootstrap.daydream-lab.com/mcp`).

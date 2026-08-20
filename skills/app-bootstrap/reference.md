@@ -6,10 +6,12 @@ Server name: `app-bootstrap`。`repo` 從**本機** `git remote` → `owner/name
 
 使用者說明見 [README.md](../../README.md)。
 
+Slash（非 MCP）：空專案先 `/app-bootstrap-init`（本機寫文件／Dockerfile／workflows），再 `bootstrap`。
+
 | Tool | When | Args |
 |---|---|---|
 | `project_status` | Status, URLs, ECS, latest deploy | `repo`, `env?`, `region?` |
-| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared Fargate+ALB（`hostname` optional, unique across envs when set; otherwise `attach_domain` later）。`static_ip=true` = EC2+EIP。`database`：shared-dev 共用 Postgres；**prod 為 RDS**。`db_instance_class?`。`keep_warm` 僅 shared-dev。AWS 成功後 GitHub workflow／variables 可能 `github.retryable` | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `static_ip?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
+| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared Fargate+ALB（`hostname` optional, unique across envs when set; otherwise `attach_domain` later）。`static_ip=true` = EC2+EIP。`database`：shared-dev 共用 Postgres；**prod 為 RDS**。`db_instance_class?`。`keep_warm` 僅 shared-dev。AWS 成功後 GitHub workflow／variables 可能 `github.retryable`；遠端已有 deploy workflow 則不覆寫 | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `static_ip?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
 | `wake` | Start shared-**dev** service + Postgres until next 22:00 Taipei | `repo`, `region?`, `keep_warm?` |
 | `set_env` | One Secrets Manager key; confirm to roll ECS | `repo`, `key`, `value`, `env?`, `region?`, `confirm_token?` |
 | `list_env` | List keys only (no values) | `repo`, `env?`, `region?` |
