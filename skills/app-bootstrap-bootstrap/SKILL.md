@@ -12,12 +12,12 @@ Otherwise call MCP tool `bootstrap` on server `app-bootstrap`. Repo must contain
 
 Ask **`env`**: `dev` (default) or `prod`.
 
-**Default** (`static_ip=false`): join the shared Fargate+ALB pool for that env. **`hostname` is optional** (unique across **both** shared ALBs when set). Omit it and call `attach_domain` later. Missing pool → tell operator to apply the matching shared-*-stack.sh.
+**Default** (`isolate=false`): join the shared Fargate+ALB pool for that env. **`hostname` is optional** (unique across **both** shared ALBs when set). Omit it and call `attach_domain` later. Missing pool → tell operator to apply the matching shared-*-stack.sh.
 
-- `database=true`: on **shared-dev** → shared Postgres EC2; on **prod** (or any `static_ip`) → dedicated RDS. Optional `db_instance_class` (default `db.t4g.micro`).
+- `database=true`: on **shared-dev** → shared Postgres EC2; on **prod** (or any isolate box) → dedicated RDS. Optional `db_instance_class` (default `db.t4g.micro`).
 - `storage=true`: private S3 + CloudFront (OAC); overwrites `AWS_BUCKET` / `AWS_DEFAULT_REGION` / `AWS_URL`. Seed with `aws s3 sync` manually. Re-bootstrap with `storage=false` destroys the bucket and CDN.
 - `keep_warm=true`: only for shared-**dev**.
-- `static_ip=true`: EC2+EIP+Caddy; does not join shared ALB.
+- `isolate=true` (alias `static_ip`): EC2+EIP+Caddy; does not join shared ALB.
 - Do not invent shared_db (not implemented yet).
 
 See [reference.md](../app-bootstrap/reference.md).

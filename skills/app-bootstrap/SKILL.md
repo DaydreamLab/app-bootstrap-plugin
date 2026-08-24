@@ -17,6 +17,6 @@ For application repos, see [README.md](../../README.md) and [reference.md](refer
 
 Empty app repo (no Dockerfile／docs／workflows): suggest `/app-bootstrap-init` first, then `bootstrap`.
 
-Before `bootstrap`, ask **env** (`dev`|`prod`). **hostname is optional** (omit and call `attach_domain` later; unique across env ingress when set). Unclear compute → shared-dev ECS on the shared t4g.medium (`static_ip=false`). `static_ip=true` is isolate (own EC2+Caddy, still 09–22 schedule). `keep_warm` only shared-dev overnight (does not keep isolate boxes up).
+Before `bootstrap`, ask **env** (`dev`|`prod`). **hostname is optional** (omit and call `attach_domain` later; unique across env ingress when set). Unclear compute → shared-dev ECS on the shared t4g.medium (`isolate=false`). `isolate=true` (alias `static_ip`) is a dedicated EC2+Caddy box (still 09–22 schedule). `keep_warm` only shared-dev overnight (does not keep isolate boxes up).
 
 If MCP is missing, tell the user to install the **app-bootstrap** plugin from `https://github.com/DaydreamLab/app-bootstrap-plugin` (MCP URL is built in: `https://app-bootstrap.daydream-lab.com/mcp`).
