@@ -11,7 +11,7 @@ Slash（非 MCP）：空專案先 `/app-bootstrap-init`（本機寫文件／Dock
 | Tool | When | Args |
 |---|---|---|
 | `project_status` | Status, URLs, ECS, latest deploy | `repo`, `env?`, `region?` |
-| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared-dev = ECS on t4g.medium+Caddy+EIP（`hostname` optional, unique across envs when set; otherwise `attach_domain` later with A record to shared EIP）。`isolate=true`（alias `static_ip`）= dedicated EC2+EIP。`database`：shared-dev 共用 Postgres；**prod 為 RDS**。`storage=true`：私有 S3＋CloudFront。`keep_warm` 僅 shared-dev。 | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `isolate?`, `static_ip?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
+| `bootstrap` | First-time **dev or prod** for an **app** repo. Shared-dev = ECS on t4g.medium+Caddy+EIP（`hostname` optional, unique across envs when set; otherwise `attach_domain` later with A record to shared EIP）。`isolate=true`（alias `static_ip`）= dedicated EC2+EIP+Caddy with Redis plus MySQL or Postgres on that host（`isolate_db=mysql|postgres`，default mysql）。`database`：shared-dev 共用 Postgres；**prod 或 isolate+database 為 RDS**。`storage=true`：私有 S3＋CloudFront。`keep_warm` 僅 shared-dev。 | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `isolate?`, `static_ip?`, `isolate_db?`, `instance_type?`, `keep_warm?`, `db_instance_class?` |
 | `wake` | Start shared-**dev** compute + Postgres + Redis (or isolate EC2) until next 22:00 Taipei | `repo`, `region?`, `keep_warm?` |
 | `attach_domain` | Set hostname after DNS matches (shared-dev: A to EIP + Caddy; prod: ALB host-header) | `repo`, `hostname`, `region?`, `env?` |
 | `set_env` | One Secrets Manager key; confirm to roll ECS | `repo`, `key`, `value`, `env?`, `region?`, `confirm_token?` |
