@@ -49,7 +49,7 @@ jobs:
           docker push "${REPO}:latest"
           echo "uri=$SHA" >> "$GITHUB_OUTPUT"
 
-      - name: Wake shared Postgres and Redis until 22:00 Taipei
+      - name: Wake shared Postgres, MariaDB, and Redis until 22:00 Taipei
         run: |
           PREFIX=/app-bootstrap/dev-shared
           IDS=()

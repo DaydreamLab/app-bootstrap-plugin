@@ -10,6 +10,6 @@ Call MCP tool `destroy` on server `app-bootstrap` only if the user clearly asked
 
 - `repo` from git origin; `env` default `dev`
 - Follow `confirm_token`. Prod also `confirm_phrase`: `DESTROY owner/name`
-- Current repo only. Does **not** destroy shared VPC/ALB/Postgres.
+- Current repo only. Does **not** destroy shared VPC/ALB/Postgres/MariaDB/Redis.
 
 See [reference.md](../app-bootstrap/reference.md).
