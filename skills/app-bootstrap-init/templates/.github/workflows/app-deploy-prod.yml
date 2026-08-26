@@ -85,6 +85,24 @@ jobs:
               --output text)
             if [[ "$ready" == "True" ]]; then
               echo "service $SERVICE is stable"
+              # Drop unused images on EC2 hosts (no-op on Fargate).
+              mapfile -t ARNS < <(aws ecs list-container-instances --cluster "$CLUSTER" --status ACTIVE --query 'containerInstanceArns[]' --output text | tr '\t' '\n' | sed '/^$/d')
+              if [[ ${#ARNS[@]} -eq 0 ]]; then
+                echo "no EC2 container instances; skip image prune"
+                exit 0
+              fi
+              mapfile -t IDS < <(aws ecs describe-container-instances --cluster "$CLUSTER" --container-instances "${ARNS[@]}" --query 'containerInstances[?status==`ACTIVE`].ec2InstanceId' --output text | tr '\t' '\n' | sed '/^$/d' | sort -u)
+              PARAMS='{"commands":["docker container prune -f || true","docker image prune -af || true","df -h / | tail -n 1 || true"]}'
+              for id in "${IDS[@]}"; do
+                echo "pruning unused docker images on $id..."
+                cmd_id=$(aws ssm send-command --instance-ids "$id" --document-name AWS-RunShellScript --comment "prune unused docker images after deploy" --parameters "$PARAMS" --query 'Command.CommandId' --output text || true)
+                [[ -z "$cmd_id" || "$cmd_id" == "None" ]] && continue
+                for _ in $(seq 1 40); do
+                  st=$(aws ssm get-command-invocation --command-id "$cmd_id" --instance-id "$id" --query 'Status' --output text 2>/dev/null || echo Pending)
+                  case "$st" in Success|Failed|Cancelled|TimedOut) echo "prune $id: $st"; break ;; esac
+                  sleep 3
+                done
+              done
               exit 0
             fi
             sleep 15
