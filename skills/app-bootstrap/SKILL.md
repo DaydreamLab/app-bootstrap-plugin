@@ -19,4 +19,6 @@ Empty app repo (no Dockerfile／docs／workflows): suggest `/app-bootstrap-init`
 
 Before `bootstrap`, ask **env** (`dev`|`prod`). Default **region is Taipei `ap-east-2`** (omit `region` unless they want another allowlisted region). **hostname is optional** (omit and call `attach_domain` later; unique across env ingress when set). Unclear compute → shared-dev ECS on the shared t4g.medium (`isolate=false`). `isolate=true` (alias `static_ip`) is a dedicated EC2+Caddy box with Redis plus MySQL or Postgres on that host (`isolate_db=mysql|postgres`, default mysql; still 09–22 schedule). `keep_warm` only shared-dev overnight (does not keep isolate boxes up).
 
+For background processing, pass `worker=true` plus a required `worker_command` (for example `php artisan queue:work --tries=3`). This creates a separate ECS worker service using the same image, secrets, and task role as web, without a port or load balancer. `worker_cpu` and `worker_memory` default to 256; on economy `t3.micro`/`t4g.micro`, worker memory cannot exceed 256 MiB, so suggest a small instance for larger workers.
+
 If MCP is missing, tell the user to install the **app-bootstrap** plugin from `https://github.com/DaydreamLab/app-bootstrap-plugin` (MCP URL is built in: `https://app-bootstrap.daydream-lab.com/mcp`).
