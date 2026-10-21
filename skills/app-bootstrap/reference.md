@@ -12,7 +12,9 @@ Slash（非 MCP）：空專案先 `/app-bootstrap-init`（本機寫文件／Dock
 |---|---|---|
 | `project_status` | Status, URLs, ECS, latest deploy | `repo`, `env?`, `region?` |
 | `bootstrap` | First-time **dev or prod** for an **app** repo. Shared-dev = ECS on t4g.medium+Caddy+EIP（`hostname` optional, unique across envs when set; otherwise `attach_domain` later with A record to shared EIP）。`isolate=true`（alias `static_ip`）= dedicated EC2+EIP+Caddy with Redis plus MySQL or Postgres on that host（`isolate_db=mysql|postgres`，default mysql）。`database`：shared-dev 共用 Postgres（預設）或 MariaDB（`db_engine=mysql`）；**isolate-dev 同機 DB＋Redis**；**prod 為 RDS**。`storage=true`：私有 S3＋CloudFront。`keep_warm` 僅 shared-dev。`worker=true` 需指定 `worker_command`，建立同 image、無 port/LB 的第二個 ECS worker service。 | `repo`, `env?`, `hostname?`, `region?`, `database?`, `storage?`, `isolate?`, `static_ip?`, `isolate_db?`, `db_engine?`, `instance_type?`, `keep_warm?`, `db_instance_class?`, `worker?`, `worker_command?`, `worker_cpu?`, `worker_memory?` |
-| `wake` | Start shared-**dev** compute + Postgres + MariaDB + Redis (or isolate EC2) until next 22:00 Taipei | `repo`, `region?`, `keep_warm?` |
+| `wake` | Start shared-**dev** compute + Postgres + MariaDB + Redis, or isolate EC2. Shared: next 22:00 Taipei unless `keep_warm` (`until` isolate-only). Isolate: check `hold_history` first and pass `until`; active hold rejects omitted/earlier `until` (equal OK)—shorten via `clear_hold` then `wake(until=…)` | `repo`, `region?`, `keep_warm?`, `until?` |
+| `clear_hold` | Clear active isolate-dev wake hold (SSM only; does **not** stop EC2). Two-step `confirm_token`. Missing/expired/error → `cleared=false`, no token | `repo`, `region?`, `confirm_token?` |
+| `hold_history` | Isolate hold state + recent audit events | `repo`, `region?`, `limit?` |
 | `attach_domain` | Set hostname after DNS matches (shared-dev: A to EIP + Caddy; prod: ALB host-header) | `repo`, `hostname`, `region?`, `env?` |
 | `set_env` | One Secrets Manager key; confirm to roll ECS | `repo`, `key`, `value`, `env?`, `region?`, `confirm_token?` |
 | `logs_status` / `logs_deploys` / `logs_errors` | Health / Actions / CW | … |
