@@ -48,12 +48,12 @@ Deploy workflow 範本：以平台 `templates/github/` 為準，改完再同步�
 
 空專案：先 **`/app-bootstrap-init`**（文件、最小 Dockerfile、ci／deploy workflows），再 MCP `bootstrap`。
 
-常用 MCP：`project_status`、`bootstrap`、`wake`、`set_env` / `list_env`、`attach_domain`、`logs_*`、`destroy`。
+常用 MCP：`project_status`、`bootstrap`、`wake`、`clear_hold`、`hold_history`、`set_env` / `list_env`、`attach_domain`、`logs_*`、`destroy`。
 
 - 共用 ALB：`bootstrap` 的 `hostname` 可省略，之後 `attach_domain`；有填則跨 dev／prod 不可撞名
 - 推 `main` → dev；tag `vMAJOR.MINOR.PATCH` → prod
 - `bootstrap` 若遠端已有 deploy workflow **不覆寫**
-- shared-dev 平日 09:00 開、每天 22:00 關（Asia/Taipei）；502 時先 `wake`
+- shared-dev 平日 09:00 開、每天 22:00 關（Asia/Taipei）；502 時先 `wake`（isolate：先 `hold_history`、帶 `until`；要縮短期限先 `clear_hold`）
 
 ## Documentation
 
